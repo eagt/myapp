@@ -1,0 +1,12 @@
+<% if notice %>
+  <div class="alert alert-success alert-dismissible d-flex justify-content-center contated-notice" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% elsif alert %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <%= alert %>
+  </div>
+<% end %>
