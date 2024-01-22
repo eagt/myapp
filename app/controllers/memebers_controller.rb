@@ -1,2 +1,0 @@
-class MemebersController < ApplicationController
-end

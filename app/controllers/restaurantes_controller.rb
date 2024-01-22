@@ -1,13 +1,15 @@
 class RestaurantesController < ApplicationController
   before_action :set_restaurante, only: %i[ show edit update destroy ]
+  before_action :authorize_member, only: %i[ show edit update destroy ]
+
 
   # GET /restaurantes or /restaurantes.json
   def index
-    @restaurantes = Restaurante.all
+    @restaurantes = current_user.restaurantes
   end
 
   # GET /restaurantes/1 or /restaurantes/1.json
-  def show
+  def show    
   end
 
   # GET /restaurantes/new
@@ -22,9 +24,9 @@ class RestaurantesController < ApplicationController
   # POST /restaurantes or /restaurantes.json
   def create
     @restaurante = Restaurante.new(restaurante_params)
-
     respond_to do |format|
       if @restaurante.save
+        @restaurante.members.create(user: current_user, rte_roles: {rte_admin: true})
         format.html { redirect_to restaurante_url(@restaurante), notice: "Restaurante was successfully created." }
         format.json { render :show, status: :created, location: @restaurante }
       else
@@ -59,6 +61,10 @@ class RestaurantesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def authorize_member
+      return redirect_to root_path, alert: 'No eres miembro de este Restaurante' unless @restaurante.users.include? current_user
+    end 
     def set_restaurante
       @restaurante = Restaurante.find(params[:id])
     end
