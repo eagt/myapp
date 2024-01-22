@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+  resources :memebers
   resources :restaurantes
   devise_for :users, controllers: {
     confirmations: 'confirmations'

@@ -1,0 +1,2 @@
+class MemebersController < ApplicationController
+end
